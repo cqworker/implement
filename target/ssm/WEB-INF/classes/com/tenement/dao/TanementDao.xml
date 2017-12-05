@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.tenement.dao.TanementDao">
+
+    <select id="findByUserName" resultType="user">
+        SELECT *
+        FROM comcq.user
+        WHERE userName = #{userName}
+    </select>
+
+    <select id="findByCount" resultType="int">
+        SELECT count(id)
+        FROM user
+    </select>
+
+    <select id="findByPage" resultType="user">
+        SELECT *
+        FROM user
+        WHERE 1 = 1;
+    </select>
+</mapper>

@@ -1,0 +1,19 @@
+{
+    "code": 0,
+    "body": {
+        "at least 2": {
+            "expression": "wheel >= 2",
+            "is_valid": true,
+            "description": "轮子数量大于等于2",
+            "error_message": "轮子数量不能小于2！",
+            "position": ""
+        },
+        "equal 2": {
+            "expression": "wheel == 2",
+            "is_valid": false,
+            "description": "轮子数量等于2",
+            "error_message": "轮子数量必须等于2！",
+            "position": ""
+        }
+    }
+}

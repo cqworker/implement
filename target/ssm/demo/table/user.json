@@ -1,0 +1,160 @@
+{
+  "code": 0,
+  "msg": "",
+  "count": 39,
+  "data": [
+    {
+      "name": "Contract",
+      "dis": "合同"
+    },
+    {
+      "name": "DeliveryAndSettlement",
+      "dis": "交收结算关联"
+    },
+    {
+      "name": "DeliveryBill",
+      "dis": "交收单据"
+    },
+    {
+      "name": "DeliveryOrderByDay",
+      "dis": "日交收单"
+    },
+    {
+      "name": "Documents",
+      "dis": "文档"
+    },
+    {
+      "name": "Dongjiangao",
+      "dis": "董监高"
+    },
+    {
+      "name": "Enterprise",
+      "dis": "企业"
+    },
+    {
+      "name": "EnterpriseAccount",
+      "dis": "银行账户"
+    },
+    {
+      "name": "FinalAccountsOrder",
+      "dis": "决算单"
+    },
+    {
+      "name": "FinanceApply",
+      "dis": "融资申请"
+    },
+    {
+      "name": "FinanceApplyDoc",
+      "dis": "融资申请文档"
+    },
+    {
+      "name": "FinanceRepaymentReg",
+      "dis": "融资还款登记"
+    },
+    {
+      "name": "GuanLContract",
+      "dis": "关联合同"
+    },
+    {
+      "name": "InvoiceBill",
+      "dis": "发票单据"
+    },
+    {
+      "name": "InvoiceOrder",
+      "dis": "发票单"
+    },
+    {
+      "name": "LineOfCredit",
+      "dis": "授信额度单"
+    },
+    {
+      "name": "MyNotification",
+      "dis": "通知"
+    },
+    {
+      "name": "PaymentApply",
+      "dis": "支付申请"
+    },
+    {
+      "name": "PaymentOrder",
+      "dis": "支付单"
+    },
+    {
+      "name": "PaymentOrderBill",
+      "dis": "支付单单据"
+    },
+    {
+      "name": "QualityList",
+      "dis": "质检表"
+    },
+    {
+      "name": "QualityTestList",
+      "dis": "质检表"
+    },
+    {
+      "name": "ReceivablesOrder",
+      "dis": "收款单"
+    },
+    {
+      "name": "SettlementAndInvoice",
+      "dis": "结算发票关联"
+    },
+    {
+      "name": "SettlementApply",
+      "dis": "结算申请"
+    },
+    {
+      "name": "SettlementApplyBill",
+      "dis": "结算申请单据"
+    },
+    {
+      "name": "SettlementApply_1",
+      "dis": "临时表1"
+    },
+    {
+      "name": "SettlementApply_2b",
+      "dis": "临时表2"
+    },
+    {
+      "name": "SettlementBill",
+      "dis": "结算单单据"
+    },
+    {
+      "name": "SettlementDeliveryConfirm",
+      "dis": "结算交收确认单"
+    },
+    {
+      "name": "SettlementOrder",
+      "dis": "结算单"
+    },
+    {
+      "name": "StatementOfFunds",
+      "dis": "资金对账单"
+    },
+    {
+      "name": "StockHolder",
+      "dis": "股东"
+    },
+    {
+      "name": "SuppleAgree",
+      "dis": "补充协议"
+    },
+    {
+      "name": "SupplyChain",
+      "dis": "供应链"
+    },
+    {
+      "name": "Template",
+      "dis": "Template"
+    },
+    {
+      "name": "TransactionNode",
+      "dis": "交易节点"
+    },
+    {
+      "name": "User",
+      "dis": "用户"
+    },
+    {}
+  ]
+}

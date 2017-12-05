@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+       http://www.springframework.org/schema/beans/spring-beans-4.0.xsd">
+
+
+    <!--过滤-->
+    <bean id="shiroFilter" class="org.apache.shiro.spring.web.ShiroFilterFactoryBean">
+        <property name="securityManager" ref="securityManager"/>
+        <property name="loginUrl" value="/user/toLogin"/>
+        <property name="successUrl" value="/intelligentRetrieval/index"/>
+        <property name="unauthorizedUrl" value="/user/toLogin"/>
+        <property name="filterChainDefinitions">
+            <value>
+                /user/login = anon
+                /user/register = anon
+                /user/logout = logout
+                /resources/** = anon
+                /organizationManager/user/**=perms[superadmin]
+                /organizationManager/permission/**=perms[superadmin]
+                /** = authc
+            </value>
+        </property>
+    </bean>
+
+
+    <!-- 会话ID生成器 -->
+    <bean id="sessionIdGenerator"
+          class="org.apache.shiro.session.mgt.eis.JavaUuidSessionIdGenerator"/>
+
+    <!-- 会话Cookie模板 -->
+    <bean id="sessionIdCookie" class="org.apache.shiro.web.servlet.SimpleCookie">
+        <constructor-arg value="shiroId"/>
+        <property name="httpOnly" value="true"/>
+        <property name="maxAge" value="1800000"/>
+    </bean>
+
+    <bean id="sessionValidationScheduler"
+          class="org.apache.shiro.session.mgt.ExecutorServiceSessionValidationScheduler">
+        <property name="interval" value="1800000"/>
+        <property name="sessionManager" ref="sessionManager"/>
+    </bean>
+
+    <!--生命周期-->
+    <bean id="lifecycleBeanPostProcessor" class="org.apache.shiro.spring.LifecycleBeanPostProcessor"/>
+
+
+    <!--securityManager是shiro核心部分-->
+    <bean id="securityManager" class="org.apache.shiro.web.mgt.DefaultWebSecurityManager">
+
+        <property name="realm" ref="myRealm"/>
+
+        <property name="sessionManager" ref="sessionManager"/>
+
+        <property name="cacheManager" ref="cacheManager"/>
+
+        <property name="rememberMeManager" ref="rememberMeManager"/>
+
+    </bean>
+
+    <bean id="myRealm" class="com.shiroTest.MyShiroRealm">
+        <property name="cachingEnabled" value="true"/>
+        <property name="authenticationCachingEnabled" value="true"/>
+        <property name="authenticationCacheName" value="authenticationCache"/>
+        <property name="authorizationCachingEnabled" value="true"/>
+        <property name="authorizationCacheName" value="authorizationCache"/>
+    </bean>
+
+    <!--配置shiro的sessionManager-->
+    <bean id="sessionManager" class="org.apache.shiro.web.session.mgt.DefaultWebSessionManager">
+        <property name="sessionDAO" ref="sessionDAO"/>
+        <property name="deleteInvalidSessions" value="true"/>
+        <property name="globalSessionTimeout" value="3600000"/>
+        <property name="sessionIdCookieEnabled" value="true"/>
+        <property name="sessionIdCookie" ref="sessionIdCookie"/>
+        <property name="sessionValidationSchedulerEnabled" value="true"/>
+        <property name="sessionValidationScheduler" ref="sessionValidationScheduler"/>
+    </bean>
+
+    <bean id="sessionDAO" class="org.apache.shiro.session.mgt.eis.EnterpriseCacheSessionDAO">
+        <property name="activeSessionsCacheName" value="shiro-activeSessionCache"/>
+        <property name="sessionIdGenerator" ref="sessionIdGenerator"/>
+    </bean>
+    <!--
+        <bean id="sessionDAO" class="com.evision.shiroTest.RedisSessionDAO">
+            <property name="redisManager" ref="redisManager"/>
+        </bean>-->
+
+
+    <!-- 缓存管理器 使用Ehcache实现 -->
+    <bean id="cacheManager" class="org.apache.shiro.cache.ehcache.EhCacheManager">
+        <property name="cacheManagerConfigFile" value="classpath:shiro-ehcache.xml"/>
+    </bean>
+
+    <!-- <bean id="cacheManager" class="com.evision.shiroTest.RedisCahceManager">&lt;!&ndash; 自定义cacheManager &ndash;&gt;
+         <property name="redisManager" ref="redisManager"/>
+     </bean>
+
+     <bean id="redisManager" class="com.evision.shiroTest.RedisManager"/>-->
+
+
+    <bean id="rememberMeManager" class="org.apache.shiro.web.mgt.CookieRememberMeManager">
+        <property name="cookie" ref="rememberMeCookie"/>
+    </bean>
+
+    <bean id="rememberMeCookie" class="org.apache.shiro.web.servlet.SimpleCookie">
+        <constructor-arg value="rememberMe"/>
+        <property name="maxAge" value="2592000"/>
+        <property name="name" value="rememberMe"/>
+    </bean>
+
+</beans>
