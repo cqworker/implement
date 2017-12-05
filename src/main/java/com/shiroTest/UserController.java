@@ -14,7 +14,7 @@ import javax.servlet.http.HttpServletRequest;
 import java.util.HashMap;
 import java.util.Map;
 
-@Controller
+//@Controller
 public class UserController {
 
     @RequestMapping("home/index")
