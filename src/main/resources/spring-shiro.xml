@@ -5,18 +5,24 @@
        http://www.springframework.org/schema/beans/spring-beans-4.0.xsd">
 
 
-    <!--过滤-->
+    <!--安全认证过滤器-->
     <bean id="shiroFilter" class="org.apache.shiro.spring.web.ShiroFilterFactoryBean">
+        <!--securityManager：指定一个负责管理的bean，这个新的bean在接下来会定义，其中包含了认证的主要逻辑-->
         <property name="securityManager" ref="securityManager"/>
+        <!--loginUrl：没有登录的用户请求需要登录的页面时自动跳转到登录页面，不是必须的属性，不输入地址的话会自动寻找项目web项目的根目录下的”/login.jsp”页面-->
         <property name="loginUrl" value="/user/toLogin"/>
+        <!--successUrl：登录成功默认跳转页面，不配置则跳转至”/”。如果登陆前点击的一个需要登录的页面，则在登录自动跳转到那个需要登录的页面-->
         <property name="successUrl" value="/intelligentRetrieval/index"/>
+        <!--unauthorizedUrl：没有权限默认跳转的页面-->
         <property name="unauthorizedUrl" value="/user/toLogin"/>
         <property name="filterChainDefinitions">
             <value>
+                <!--认证-->
                 /user/login = anon
                 /user/register = anon
                 /user/logout = logout
                 /resources/** = anon
+                <!--授权-->
                 /organizationManager/user/**=perms[superadmin]
                 /organizationManager/permission/**=perms[superadmin]
                 /** = authc
@@ -24,6 +30,26 @@
         </property>
     </bean>
 
+    <!--Shiro 业务对象-->
+    <bean id="securityManager" class="org.apache.shiro.web.mgt.DefaultWebSecurityManager">
+
+        <property name="realm" ref="myRealm"/>
+
+        <property name="sessionManager" ref="sessionManager"/>
+
+        <property name="cacheManager" ref="cacheManager"/>
+
+        <property name="rememberMeManager" ref="rememberMeManager"/>
+
+    </bean>
+
+    <bean id="myRealm" class="com.shiro.MyShiroRealm">
+        <property name="cachingEnabled" value="true"/>
+        <property name="authenticationCachingEnabled" value="true"/>
+        <property name="authenticationCacheName" value="authenticationCache"/>
+        <property name="authorizationCachingEnabled" value="true"/>
+        <property name="authorizationCacheName" value="authorizationCache"/>
+    </bean>
 
     <!-- 会话ID生成器 -->
     <bean id="sessionIdGenerator"
@@ -45,28 +71,6 @@
     <!--生命周期-->
     <bean id="lifecycleBeanPostProcessor" class="org.apache.shiro.spring.LifecycleBeanPostProcessor"/>
 
-
-    <!--securityManager是shiro核心部分-->
-    <bean id="securityManager" class="org.apache.shiro.web.mgt.DefaultWebSecurityManager">
-
-        <property name="realm" ref="myRealm"/>
-
-        <property name="sessionManager" ref="sessionManager"/>
-
-        <property name="cacheManager" ref="cacheManager"/>
-
-        <property name="rememberMeManager" ref="rememberMeManager"/>
-
-    </bean>
-
-    <bean id="myRealm" class="com.shiroTest.MyShiroRealm">
-        <property name="cachingEnabled" value="true"/>
-        <property name="authenticationCachingEnabled" value="true"/>
-        <property name="authenticationCacheName" value="authenticationCache"/>
-        <property name="authorizationCachingEnabled" value="true"/>
-        <property name="authorizationCacheName" value="authorizationCache"/>
-    </bean>
-
     <!--配置shiro的sessionManager-->
     <bean id="sessionManager" class="org.apache.shiro.web.session.mgt.DefaultWebSessionManager">
         <property name="sessionDAO" ref="sessionDAO"/>
@@ -83,7 +87,7 @@
         <property name="sessionIdGenerator" ref="sessionIdGenerator"/>
     </bean>
     <!--
-        <bean id="sessionDAO" class="com.evision.shiroTest.RedisSessionDAO">
+        <bean id="sessionDAO" clacom.shiro.RedisSessionDAO">
             <property name="redisManager" ref="redisManager"/>
         </bean>-->
 
@@ -93,11 +97,11 @@
         <property name="cacheManagerConfigFile" value="classpath:shiro-ehcache.xml"/>
     </bean>
 
-    <!-- <bean id="cacheManager" class="com.evision.shiroTest.RedisCahceManager">&lt;!&ndash; 自定义cacheManager &ndash;&gt;
+    <!-- <bean id="cacheManager" class="com.evisshiroTest.RedisCahceManager">&lt;!&ndash; 自定义cacheManager &ndash;&gt;
          <property name="redisManager" ref="redisManager"/>
      </bean>
 
-     <bean id="redisManager" class="com.evision.shiroTest.RedisManager"/>-->
+     <bean id="redisManager" class="com.evisshiroTest.RedisManager"/>-->
 
 
     <bean id="rememberMeManager" class="org.apache.shiro.web.mgt.CookieRememberMeManager">

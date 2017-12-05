@@ -11,11 +11,7 @@ import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.TimeUnit;
 
-/**
- * @作者: YL
- * @时间: 创建时间：17-11-17 下午3:51
- * @功能描述:
- */
+
 public class RedisUtil {
 
     private Log log = LogFactory.getLog(getClass());

@@ -1,5 +1,7 @@
 package com.user.entity;
 
+import java.util.Date;
+
 /**
  * Created by cq
  * date: 12/5 0005
@@ -9,6 +11,7 @@ public class User {
     String name;
     String password;
     String salt;
+    Date lastLoginTime;
     int enable;
     public static final int DENY = 0;
 
@@ -49,6 +52,14 @@ public class User {
 
     public void setSalt(String salt) {
         this.salt = salt;
+    }
+
+    public Date getLastLoginTime() {
+        return lastLoginTime;
+    }
+
+    public void setLastLoginTime(Date lastLoginTime) {
+        this.lastLoginTime = lastLoginTime;
     }
 
     @Override

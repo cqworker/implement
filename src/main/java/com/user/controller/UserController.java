@@ -4,12 +4,10 @@ import com.user.entity.User;
 import com.user.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by cq
@@ -23,25 +21,41 @@ public class UserController {
     @Autowired
     UserService service;
 
+
+    /**
+     * 登录验证
+     * @param map
+     * @return
+     */
+    @RequestMapping(value = "login", method = RequestMethod.POST)
+    @ResponseBody
+    public Object getUsers(@PathVariable Map map) {
+        String json = service.login(map);
+        return json;
+    }
+
     /**
      * 获得所有user
      *
      * @return
      */
-
     @RequestMapping("get/list")
     @ResponseBody
     public Object getUsers() {
         List<User> dataList = service.getUsers();
-        return null;
+        return dataList;
     }
 
-
+    /**
+     * 获得用户信息
+     * @param userName
+     * @return
+     */
     @RequestMapping("get/{userName}")
     @ResponseBody
     public Object getUsers(@PathVariable String userName) {
-        User user = service.getUserByUserName(userName);
-        return null;
+        User user = service.findByUserName(userName);
+        return user;
     }
 }
 

@@ -4,6 +4,7 @@ import com.user.entity.User;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by cq
@@ -16,11 +17,17 @@ public interface UserService {
      * @param userName
      * @return
      */
-    User getUserByUserName(String userName);
+    User findByUserName(String userName);
 
     /**
      * 获得用户列表
      * @return
      */
     List<User> getUsers();
+
+    /**
+     * 用户登录验证
+     * @param map
+     */
+    String  login(Map map);
 }
