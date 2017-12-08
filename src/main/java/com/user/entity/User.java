@@ -9,11 +9,18 @@ import java.util.Date;
 public class User {
     String id;
     String name;
-    String password;
-    String salt;
-    Date lastLoginTime;
-    int enable;
-    public static final int DENY = 0;
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "id='" + id + '\'' +
+                ", name='" + name + '\'' +
+                ", password='" + password + '\'' +
+                ", salt='" + salt + '\'' +
+                ", lastLoginTime=" + lastLoginTime +
+                ", enable=" + enable +
+                '}';
+    }
 
     public String getId() {
         return id;
@@ -22,6 +29,7 @@ public class User {
     public void setId(String id) {
         this.id = id;
     }
+
     public String getName() {
         return name;
     }
@@ -38,14 +46,6 @@ public class User {
         this.password = password;
     }
 
-    public int getEnable() {
-        return enable;
-    }
-
-    public void setEnable(int enable) {
-        this.enable = enable;
-    }
-
     public String getSalt() {
         return salt;
     }
@@ -54,7 +54,7 @@ public class User {
         this.salt = salt;
     }
 
-    public Date getLastLoginTime() {
+    public Date getLastoginTime() {
         return lastLoginTime;
     }
 
@@ -62,14 +62,20 @@ public class User {
         this.lastLoginTime = lastLoginTime;
     }
 
-    @Override
-    public String toString() {
-        return "User{" +
-                "id='" + id + '\'' +
-                ", name='" + name + '\'' +
-                ", password='" + password + '\'' +
-                ", salt='" + salt + '\'' +
-                ", enable=" + enable +
-                '}';
+    public int getEnable() {
+        return enable;
     }
+
+    public void setEnable(int enable) {
+        this.enable = enable;
+    }
+
+    String password;
+    String salt;
+    Date lastLoginTime;
+    int enable;
+    public static final int ENABLE = 0;
+    public static final int UNABLE = 1;
+
+
 }

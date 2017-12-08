@@ -4,10 +4,21 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.user.dao.UserDao">
     <select id="findByUserName" resultType="user">
-        SELECT  * from meiqia.user where name = #{userName}
+        SELECT *
+        FROM meiqia.user
+        WHERE name = #{userName}
     </select>
 
+    <insert id="addUser">
+        INSERT INTO user (id, name, password, salt, lastLoginTime, enable)
+        VALUES (#{id}, #{name}, #{password}, #{salt}, #{lastLoginTime}, #{enable})
+    </insert>
 
+    <update id="updateUser">
+        UPDATE user
+        SET
 
-
+            name = #{name}, password = #{password}, salt = #{salt}, lastLoginTime = #{lastLoginTime}, enable = #{enable}
+        WHERE id = #{id}
+    </update>
 </mapper>

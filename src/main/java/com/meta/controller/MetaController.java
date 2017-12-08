@@ -6,6 +6,8 @@ import com.meta.service.MetaService;
 import net.minidev.json.JSONObject;
 import okhttp3.MediaType;
 import okhttp3.RequestBody;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -15,6 +17,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -28,24 +31,13 @@ public class MetaController {
     @Autowired
     private MetaService service;
 
+    Log log = LogFactory.getLog(MetaController.class);
 
     @RequestMapping("init")
     public String goMeta() {
-        return "meta";
+        return "meta/init";
     }
 
-    // TODO
-    @RequestMapping("get/111")
-    @ResponseBody
-    public Object get111() {
-        System.out.println("getsuccess");
-        String token = "AQsCAH4ZylkAAEFRQUNkNVZWa2M3UkNBQUFQU0xlNHhRYzVCUWVDQUFBQVFBQ2Q1VlZrYzdSQ0FBQUFNWE80eFFjNUJRZENBQUHpdByJItptku7_xrJZvPRPvw8ETwX8c74DTTHaq5ClR2ouJbEKqLDInLz-P_KmENSsJMTtcrOe0pjlIlTItpid";
-        List list = service.getMeta("10.100.250.133:7010", "GuoXinLianCheng", "Contract", token);
-        String s = new Gson().toJson(list);
-
-
-        return list;
-    }
     /**
      * @param request
      * @return 对象列表
@@ -53,11 +45,9 @@ public class MetaController {
     @RequestMapping("get/list")
     @ResponseBody
     public String getALLMeta(HttpServletRequest request) {
-        System.out.println("metaList");
-        String ip = (String) request.getSession().getAttribute("ip")+":7010";
+        String ip = request.getSession().getAttribute("ip") + ":7010";
         String tenement = (String) request.getSession().getAttribute("tenement");
         String token = (String) request.getSession().getAttribute("token");
-        System.out.println(ip+"---"+tenement);
         String json = service.getAllMeta(ip, tenement, token);
         return json;
     }
@@ -69,35 +59,29 @@ public class MetaController {
      * @param map
      * @return 新创建对象
      */
-    @RequestMapping("post/meta")
+    @RequestMapping("post/{meta}")
     @ResponseBody
-    public Object addMeta(HttpServletRequest request, @RequestParam Map map) {
-        System.out.println("addmeta");
-        String ip =  request.getSession().getAttribute("ip")+":7020";
+    public Object addMeta(HttpServletRequest request, @RequestParam Map map, @PathVariable String meta) {
+        //System.out.println(map);//两个参数
+        String ip = request.getSession().getAttribute("ip") + ":7020";
         String tenement = (String) request.getSession().getAttribute("tenement");
         String token = (String) request.getSession().getAttribute("token");
-        String meta = (String) map.get("meta");
         RequestBody requestBody = RequestBody.create(MediaType.parse("application/json;charset=UTF-8"), new Gson().toJson(map));
-        Integer code = service.addMeta(requestBody, ip, tenement, meta, token);
-        //TODO
-        return null;
+        String json = service.addMeta(requestBody, ip, tenement, meta, token);
+        return json;
     }
 
     /**
      * 删除单个meta
      */
-    @RequestMapping("delete/meta")
+    @RequestMapping("delete/{meta}")
     @ResponseBody
-    public Object deleteMetas(HttpServletRequest request, @RequestParam Map map) {
-        System.out.println("deltetemeta");
-        String ip = (String) request.getSession().getAttribute("ip")+":7020";
+    public Object deleteMetas(HttpServletRequest request, @PathVariable String meta) {
+        String ip = request.getSession().getAttribute("ip") + ":7020";
         String tenement = (String) request.getSession().getAttribute("tenement");
         String token = (String) request.getSession().getAttribute("token");
-        String meta = (String) map.get("meta");
-        Integer code = service.deleteMeta(ip, tenement, meta, token);
-        //TODO
-        System.out.println(code);
-        return code;
+        String json = service.deleteMeta(ip, tenement, meta, token);
+        return json;
     }
 
     /**
@@ -108,17 +92,16 @@ public class MetaController {
      */
 
     @RequestMapping("get/{meta}")
-    @ResponseBody
-    public Object getMeta(HttpServletRequest request, @PathVariable("meta") String meta) {
-        System.out.println("getmeta");
-        String ip = (String) request.getSession().getAttribute("ip")+":7010";
+    public ModelAndView getMeta(HttpServletRequest request, @PathVariable("meta") String meta) {
+        String ip = request.getSession().getAttribute("ip") + ":7010";
         String tenement = (String) request.getSession().getAttribute("tenement");
         String token = (String) request.getSession().getAttribute("token");
-        System.out.println("get"+ip+tenement+"success");
         List list = service.getMeta(ip, tenement, meta, token);
-        return list;
+        log.info(list);
+        Map map = new HashMap();
+        map.put("list", list);
+        return new ModelAndView("/meta/detail2", map);
     }
-
 
 
     /**
@@ -131,16 +114,14 @@ public class MetaController {
      */
     //meta详情页面点击新增
     @RequestMapping("post/schema")
-    public Object addMetaSchema(HttpServletRequest request, @PathVariable String meta, Map map) {
-        System.out.println("addmetaschema");
-        String ip = (String) request.getSession().getAttribute("ip")+":7020";
+    public Object addMetaSchema(HttpServletRequest request, @PathVariable String meta, @RequestParam Map map) {
+        String ip = request.getSession().getAttribute("ip") + ":7020";
         String tenement = (String) request.getSession().getAttribute("tenement");
         String token = (String) request.getSession().getAttribute("token");
 
         RequestBody requestBody = RequestBody.create(MediaType.parse("application/json;charset=UTF-8"), new Gson().toJson(map));
-        Integer code = service.addMetaSchema(requestBody, ip, tenement, meta, token);
-        //TODO
-        return null;
+        String json = service.addMetaSchema(requestBody, ip, tenement, meta, token);
+        return json;
     }
 
 
@@ -162,17 +143,16 @@ public class MetaController {
      * @param map
      * @return
      */
-    @RequestMapping("put/schema")
-    public Object addField(HttpServletRequest request, @RequestParam Map map) {
+    @RequestMapping("put/{meta}/schema")
+    @ResponseBody
+    public Object addField(HttpServletRequest request, @RequestParam Map map, @PathVariable String meta) {
         System.out.println("editmetasc");
-        String ip = (String) request.getSession().getAttribute("ip")+":7020";
+        String ip = (String) request.getSession().getAttribute("ip") + ":7020";
         String tenement = (String) request.getSession().getAttribute("tenement");
         String token = (String) request.getSession().getAttribute("token");
-        String meta = (String) map.get("meta");
         RequestBody requestBody = RequestBody.create(MediaType.parse("application/json;charset=UTF-8"), new Gson().toJson(map));
-        Integer code = service.editMetaSchema(requestBody, ip, tenement, meta, token);
-
-        return null;
+        String json = service.editMetaSchema(requestBody, ip, tenement, meta, token);
+        return json;
     }
 
     /**
@@ -182,16 +162,22 @@ public class MetaController {
      */
     //api/v1.0/meiqia/car/meta/drop
     @RequestMapping("delete/schema")
-    public Object deleteMeta(HttpServletRequest request, @RequestParam Map map) {
-        System.out.println("deletemetasc");
-        String ip = (String) request.getSession().getAttribute("ip")+":7020";
+    public Object deleteMeta(HttpServletRequest request, @RequestParam String ids) {
+        String ip = request.getSession().getAttribute("ip") + ":7020";
         String tenement = (String) request.getSession().getAttribute("tenement");
         String token = (String) request.getSession().getAttribute("token");
-        String meta = (String) map.get("meta");
-        RequestBody requestBody = RequestBody.create(MediaType.parse("application/json;charset=UTF-8"), new Gson().toJson(map));
-        Integer code = service.deleteMetaSchema(requestBody, ip, tenement, meta, token);
-        //TODO
-        return null;
+        JsonArray idsArray = new JsonParser().parse(ids).getAsJsonArray();
+        String meta = "";
+        String json ="";
+        for (JsonElement el : idsArray) {
+            meta = el.getAsString();
+            System.out.println(el.toString());
+            Map map = new HashMap();
+            map.put("name",meta);
+            RequestBody requestBody = RequestBody.create(MediaType.parse("application/json;charset=UTF-8"), new Gson().toJson(map));
+           json = service.deleteMetaSchema(requestBody, ip, tenement, meta, token);
+        }
+        return json;
     }
 
 }

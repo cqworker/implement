@@ -24,6 +24,7 @@ public class InvitationController {
     @Autowired
     InvitationService service;
 
+    //点击导航栏跳转页面
     @RequestMapping("init")
     public String goMeta() {
         return "invitation";
@@ -32,13 +33,12 @@ public class InvitationController {
     @RequestMapping("post")
     @ResponseBody
     //异步展示是否邀请成功
-    public Integer invitation(HttpServletRequest request, @RequestParam Map map){
-        System.out.println("invitation");
-        String ip = (String) request.getSession().getAttribute("ip");
+    public Object invitation(HttpServletRequest request, @RequestParam Map map) {
+        String ip = request.getSession().getAttribute("ip") + ":7121";
         String token = (String) request.getSession().getAttribute("token");
         RequestBody requestBody = RequestBody.create(MediaType.parse("application/json;charset=UTF-8"), new Gson().toJson(map));
-        Integer code = service.invitation(requestBody,ip, token);
-        return code;
+        String json = service.invitation(requestBody, ip, token);
+        return json;
     }
 
 }

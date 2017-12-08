@@ -35,7 +35,6 @@ public class TenementController {
      * @param map
      * @return
      */
-    //点击租户配置不存在租户/创建租户
     @RequestMapping("post")
     public ModelAndView addAccount(HttpServletRequest request, @RequestParam Map<String, String> map) {
         String phone = map.get("phone");

@@ -1,5 +1,7 @@
 package com.trigger.service;
 
+import com.util.api.TriggerHttpApi;
+
 import java.util.Map;
 
 /**
@@ -12,13 +14,17 @@ public interface TriggerService {
      *
      * @return
      */
-    Map<String,String> getTrigger(String ip,String tenement,String meta);
+    String getTrigger(String ip,String tenement,String meta,String token);
 
     /**
      * @param ip
      * @param tenement
-     * @param meta
      * @return
      */
-    Map<String,String> addTrigger(String ip, String tenement, String meta,Map map);
+    String addTrigger(String ip, String tenement,String meta,String token,Map map);
+
+    /**
+     * @param api
+     */
+    void init(TriggerHttpApi api);
 }

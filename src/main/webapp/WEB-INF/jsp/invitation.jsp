@@ -12,7 +12,7 @@ invitation
 <div class="layui-tab">
     <ul class="layui-tab-title">
         <li class="layui-this">邀请用户</li>
-        <li>查看用户</li>
+        <li>查看已存在用户</li>
     </ul>
     <div class="layui-tab-content">
         <div class="layui-tab-item layui-show">
@@ -38,6 +38,7 @@ invitation
                 <input class="layui-btn" type="submit" value = "邀请"/>
             </form>
         </div>
+
         <div class="layui-tab-item">Developing</div>
     </div>
 </div>

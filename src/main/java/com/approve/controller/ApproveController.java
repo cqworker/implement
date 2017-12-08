@@ -100,7 +100,7 @@ public class ApproveController {
      * @param template_id
      * @return
      */
-    @RequestMapping("delete/{template_id}")
+    @RequestMapping("edit/{template_id}")
     @ResponseBody
     public Object editApproval(HttpServletRequest request, @PathVariable String template_id,@RequestParam Map map) {
         String ip =  request.getSession().getAttribute("ip")+":7010";
@@ -117,7 +117,7 @@ public class ApproveController {
      * @param template_id
      * @return
      */
-    @RequestMapping("delete/{template_id}/{mark}")
+    @RequestMapping("put/{template_id}/{mark}")
     @ResponseBody
     public Object switchApproval(HttpServletRequest request, @PathVariable String template_id,@PathVariable Integer mark) {
         String ip =  request.getSession().getAttribute("ip")+":7010";

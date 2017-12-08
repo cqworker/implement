@@ -4,11 +4,11 @@
         "http://mybatis.org/dtd/mybatis-3-config.dtd">
 <configuration>
     <!-- 别名 -->
-    <!--<typeAliases>-->
-        <!--<typeAlias type="com.*.entity.*" alias="user"/>-->
-    <!--</typeAliases>-->
+    <typeAliases>
+        <typeAlias type="com.user.entity.User" alias="user"/>
+    </typeAliases>
     <!-- sql映射文件的位置 -->
-    <mappers>
-        <package name="com.*.entity"/>
-    </mappers>
+    <!--<mappers>-->
+        <!--<package name="com.*.entity"/>-->
+    <!--</mappers>-->
 </configuration>

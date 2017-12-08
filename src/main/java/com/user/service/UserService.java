@@ -10,7 +10,7 @@ import java.util.Map;
  * Created by cq
  * date: 12/5 0005
  */
-@Service
+
 public interface UserService {
     /**
      * 根据名字获得用户信息
@@ -30,4 +30,11 @@ public interface UserService {
      * @param map
      */
     String  login(Map map);
+
+    /**
+     * 注册用户
+     * @param map
+     * @return
+     */
+    String register(Map map);
 }

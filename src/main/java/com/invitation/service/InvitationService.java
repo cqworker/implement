@@ -14,5 +14,5 @@ public interface InvitationService {
      * @param token
      * @return
      */
-    Integer invitation(RequestBody requestBody, String ip, String token);
+    String invitation(RequestBody requestBody, String ip, String token);
 }

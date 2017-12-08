@@ -27,7 +27,7 @@ public interface MetaService {
      * @param tenement
      * @return code
      */
-    Integer deleteMeta(String ip, String tenement,String meta,String token);
+    String deleteMeta(String ip, String tenement,String meta,String token);
 
 
 
@@ -47,7 +47,7 @@ public interface MetaService {
      * @param meta
      * @return code
      */
-    Integer addMeta(RequestBody requestBody, String ip,String tenement, String meta,String token);
+    String addMeta(RequestBody requestBody, String ip,String tenement, String meta,String token);
 
     /**
      * 修改meta
@@ -58,7 +58,7 @@ public interface MetaService {
      * @return
      */
 
-    Integer editMeta(RequestBody requestBody, String tenement, String meta,String token,Integer num);
+    String editMeta(RequestBody requestBody, String tenement, String meta,String token,Integer num);
 
     /**
      * 为meta创建字段
@@ -67,7 +67,7 @@ public interface MetaService {
      * @param meta
      * @return
      */
-    Integer addMetaSchema(RequestBody requestBody,String ip, String tenement, String meta,String token);
+    String addMetaSchema(RequestBody requestBody,String ip, String tenement, String meta,String token);
 
 
 
@@ -77,7 +77,7 @@ public interface MetaService {
      * @param meta
      * @return
      */
-    Integer deleteMetaSchema(RequestBody requestBody,String ip, String tenement, String meta,String token);
+    String deleteMetaSchema(RequestBody requestBody,String ip, String tenement, String meta,String token);
 
     /**
      * 修改meta字段
@@ -86,5 +86,5 @@ public interface MetaService {
      * @param meta
      * @return
      */
-    Integer editMetaSchema(RequestBody requestBody, String ip,String tenement, String meta,String token);
+    String editMetaSchema(RequestBody requestBody, String ip,String tenement, String meta,String token);
 }

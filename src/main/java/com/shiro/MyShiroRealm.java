@@ -49,7 +49,7 @@ public class MyShiroRealm extends AuthorizingRealm {
         User user = userDao.findByUserName(userName);
 
         if (user != null) {
-            if (user.getEnable() == User.DENY) {
+            if (user.getEnable() == User.UNABLE) {
                 throw new DisabledAccountException();
             }
             //Session中设置用户和菜单

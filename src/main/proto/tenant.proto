@@ -1,0 +1,368 @@
+syntax = "proto3";
+
+option java_multiple_files = true;
+option java_package = "com.cq.grpc";
+option java_outer_classname = "myProto";
+package pb;
+
+service Tenant {
+    // 创建企业
+    rpc CreateOrg (Org) returns (Org) {
+    }
+    // 更新企业
+    rpc UpdateOrg (UpdateOrgReq) returns (Org) {
+    }
+    // 获取企业信息
+    rpc GetOrg (GetOrgReq) returns (Org) {
+    }
+    // 搜索企业
+    rpc GetOrgs (GetOrgsReq) returns (OrgList) {
+    }
+    // 转让管理员
+    rpc TransferOrgAdmin (TransferOrgAdminReq) returns (TransferOrgAdminResp) {
+    }
+    // 检查自己是不是管理员
+    rpc CheckSelfIsOrgAdmin (CheckSelfIsOrgAdminReq) returns (CheckSelfIsOrgAdminResp) {
+    }
+
+    // 创建邀请
+    rpc CreateInvitation (CreateInvitationReq) returns (CreateInvitationResp) {
+    }
+    // 接受邀请
+    rpc AcceptInvitation (AcceptInvitationReq) returns (AcceptInvitationResp) {
+    }
+    // 拒绝邀请
+    rpc DenyInvitation (DenyInvitationReq) returns (DenyInvitationResp) {
+    }
+    // 取消邀请
+    rpc CancelInvitation (CancelInvitationReq) returns (CancelInvitationResp) {
+    }
+    // 账户获取邀请列表
+    rpc GetInvitationsOfAccount (GetInvitationsOfAccountReq) returns (InvitationList) {
+    }
+    // 租户获取邀请列表
+    rpc GetInvitationsOfTenant (GetInvitationsOfTenantReq) returns (InvitationList) {
+    }
+
+    // 用户登录
+    rpc SignInTenant (SignInTenantReq) returns (SignInTenantResp) {
+    }
+    // 用户登出
+    rpc SignOutTenant (SignOutTenantReq) returns (SignOutTenantResp) {
+    }
+    // 用户删除
+    rpc DeleteTenantUser (DeleteTenantUserReq) returns (DeleteTenantUserResp) {
+    }
+
+    // 账户 获取本账户的所有绑定关系
+    rpc GetRelationsOfAccount (GetRelationsOfAccountReq) returns (RelationList) {
+    }
+    // 用户 获取所有所属账户的所有绑定关系
+    rpc GetRelationsOfUser (GetRelationsOfUserReq) returns (RelationList) {
+    }
+    // 用户 获取自己在这个租户的这一条关系
+    rpc GetSelfRelation (GetSelfRelationReq) returns (Relation) {
+    }
+    // 租户管理员 获取所有本租户的所有绑定关系
+    rpc GetRelationsOfTenant (GetRelationsOfTenantReq) returns (RelationList) {
+    }
+
+    // 生成代理Token
+    rpc CreateAgentToken (CreateAgentTokenReq) returns (CreateAgentTokenResp) {
+    }
+    //验证 token
+    rpc VerifyToken (VerifyTokenReq) returns (VerifyTokenResp) {
+    }
+    //刷新token
+    rpc RefreshToken (RefreshTokenReq) returns (RefreshTokenResp) {
+    }
+    //删除 所有 token
+    rpc RemoveAllToken (RemoveAllTokenReq) returns (RemoveAllTokenResp) {
+    }
+    // 生成PersonalToken
+    rpc CreatePersonalToken (CreatePersonalTokenReq) returns (CreatePersonalTokenResp) {
+    }
+    // 删除PersonalToken
+    rpc DeletePersonalToken (DeletePersonalTokenReq) returns (DeletePersonalTokenResp) {
+    }
+    // 获取PersonalToken
+    rpc GetPersonalTokens (GetPersonalTokensReq) returns (GetPersonalTokensResp) {
+    }
+
+    // 超级管理员
+    // 检测是否是管理员
+    rpc CheckIsOrgAdmin (CheckIsOrgAdminReq) returns (CheckIsOrgAdminResp) {
+    }
+    // 获取 tenant
+    rpc GetAllOrgList (GetAllOrgListReq) returns (OrgList) {
+    }
+
+    // 获取 tenant build版本和时间
+    rpc GetTenantVersion (GetTenantVersionReq) returns (GetTenantVersionResp) {
+    }
+}
+
+message GetSelfRelationReq {
+}
+
+message Contact {
+    string name = 1;
+    string phone = 2;
+    string email = 3;
+}
+
+//地址
+message Address {
+    string street = 1;
+    string city = 2;
+    string state = 3;
+    string post_code = 4;
+    string country = 5;
+    string country_code = 6;
+}
+
+// 组织信息
+message Org {
+    string id = 1;
+    string name = 2;
+    Contact primary_contact = 3;
+    string phone = 4;
+    string fax = 5;
+    Address address = 6;
+    string creator_account_id = 7; // 创建人 account
+    string last_updator_account_id = 8; // 最近修改人 account
+    string admin = 9; // 管理员
+    int64 created_at = 10;
+    int64 user_count = 11;
+    int64 except_password_level = 12;
+}
+
+//组织信息列表
+message OrgList {
+    repeated Org orgs = 1;
+}
+
+message UpdateOrgReq {
+    string id = 1;
+    Org org = 2;
+}
+
+message GetOrgsReq {
+    string name = 1;
+}
+
+message GetOrgReq {
+    string id = 1;
+}
+
+message TransferOrgAdminReq {
+    string tenant_id = 1;
+    string to_user_id = 2;
+}
+
+message TransferOrgAdminResp {
+}
+
+message CreateInvitationReq {
+    string phone = 1;
+    string name = 2;
+    string email = 3;
+    string profile_id = 4;
+    string role_id = 5;
+}
+
+message CreateInvitationResp {
+    int32 id = 1;
+}
+
+message AcceptInvitationReq {
+    int32 id = 1;
+}
+
+message AcceptInvitationResp {
+}
+
+message DenyInvitationReq {
+    int32 id = 1;
+}
+
+message DenyInvitationResp {
+}
+
+message CancelInvitationReq {
+    int32 id = 1;
+}
+
+message CancelInvitationResp {
+}
+
+message Invitation {
+    int32 id = 1;
+    int64 created_at = 2;
+    int64 updated_at = 3;
+    string tenant_id = 4;
+    string phone = 5;
+    string status = 6;
+    string creater_uid = 7;
+    int64 expired_at = 8;
+    string org_name = 9;
+    bool expired = 10;
+}
+
+message GetInvitationsOfAccountReq {
+    string status = 1;
+}
+
+message InvitationList {
+    repeated Invitation items = 1;
+}
+
+message GetInvitationsOfTenantReq {
+    string phone = 1;
+    string status = 2;
+}
+
+message SignInTenantReq {
+    string source = 1;
+    string tenant_id = 2;
+}
+
+message SignInTenantResp {
+    string access_token = 1;
+    string refresh_token = 2;
+}
+
+message SignOutTenantReq {
+}
+
+message SignOutTenantResp {
+}
+
+message DeleteTenantUserReq {
+    string user_id = 1;
+}
+
+message DeleteTenantUserResp {
+}
+
+message Relation {
+    int32 id = 1;
+    int64 created_at = 2;
+    int64 updated_at = 3;
+    string user_id = 4;
+    string tenant_id = 5;
+    string account_id = 6;
+    string org_name = 7;
+}
+
+message RelationList {
+    repeated Relation items = 1;
+}
+
+message GetRelationsOfAccountReq {
+}
+
+message GetRelationsOfUserReq {
+}
+
+message GetRelationsOfTenantReq {
+}
+
+message CreateAgentTokenReq {
+    string tenant_id = 1;
+    string user_id = 2;
+    int64 ttl = 3;
+}
+
+message CreateAgentTokenResp {
+    string access_token = 1;
+}
+
+message VerifyTokenReq {
+    string access_token = 1;
+}
+
+message RemoveAllTokenReq {
+    string account_id = 1;
+}
+
+message VerifyTokenResp {
+    VerifyResult Result = 1;
+    string user_id = 2;
+    string tenant_id = 3;
+}
+
+message RefreshTokenReq {
+    string refresh_token = 1;
+}
+
+message RefreshTokenResp {
+    string access_token = 1;
+    string refresh_token = 2;
+}
+
+message RemoveAllTokenResp {
+}
+
+// Token check status
+enum VerifyResult {
+    _ = 0;
+    Allow = 1;
+    Deny = 2;
+    ExpireSoon = 3;
+    Expired = 4;
+}
+
+message CheckIsOrgAdminResp {
+    bool is_admin = 1;
+}
+
+message GetAllOrgListReq {
+}
+
+message CheckIsOrgAdminReq {
+    string tenant_id = 1;
+    string user_id = 2;
+}
+
+message CheckSelfIsOrgAdminReq {
+}
+
+message CheckSelfIsOrgAdminResp {
+    bool is_admin = 1;
+}
+
+message CreatePersonalTokenReq {
+    string name = 1;
+}
+
+message CreatePersonalTokenResp {
+    string personal_token = 1;
+}
+
+message DeletePersonalTokenReq {
+    string name = 1;
+}
+
+message DeletePersonalTokenResp {
+}
+
+message GetPersonalTokensReq {
+}
+
+message PersonalToken {
+    string name = 1;
+    int64 created_at = 2;
+}
+
+message GetPersonalTokensResp {
+    repeated PersonalToken personal_tokens = 1;
+}
+
+message GetTenantVersionReq {
+}
+
+message GetTenantVersionResp {
+    string build_time = 1;
+    string git_hash = 2;
+}

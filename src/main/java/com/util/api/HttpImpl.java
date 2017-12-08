@@ -38,9 +38,9 @@ public class HttpImpl {
      * @return
      */
     public static Map<String, Object> addDataMap(String result) {
-        Map<String, Object> dataMap = new HashMap<>();
-        List<Map<String,String>> metaList = new ArrayList<>();
-        List<String>  tempList = new ArrayList<>();
+        Map<String, Object> dataMap = new HashMap<String,Object>();
+        List<Map<String,String>> metaList = new ArrayList<Map<String,String>>();
+        List<String>  tempList = new ArrayList<String>();
         //判断code
         Integer code = new JsonParser().parse(result).getAsJsonObject().get("code").getAsInt();
         if (code != 0) {
@@ -58,7 +58,7 @@ public class HttpImpl {
             String v  = entry.getValue().toString();
             String k = entry.getKey();
             tempList.add(k);
-            Map<String,String> tempMap = new HashMap<>();
+            Map<String,String> tempMap = new HashMap<String,String>();
             tempMap.put(k,v);
             metaList.add(tempMap);
         }

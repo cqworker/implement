@@ -59,7 +59,7 @@
         <property name="sqlSessionFactoryBeanName" value="sqlSessionFactory"/>
         <!-- 指定Dao接口的包名 -->
         <property name="basePackage"
-                  value="com.dao;"/>
+                  value="com.*.dao;"/>
     </bean>
 
 
@@ -87,10 +87,10 @@
 
     <!--  配置参与事务的类 -->
     <aop:config>
-        <aop:pointcut id="pointcut" expression="execution(* com.*.service.*.*(..))"/>
-        <aop:advisor pointcut-ref="pointcut" advice-ref="advice"/>
+        <aop:pointcut expression="execution(* com.*.*(..))"
+                      id="txPointCut"/>
+        <aop:advisor advice-ref="advice" pointcut-ref="txPointCut"/>
     </aop:config>
-
 
     <!-- 上传文件 -->
     <bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
@@ -100,6 +100,8 @@
         <!-- 最大文件大小，-1为不限制大小 -->
         <property name="maxUploadSize" value="-1"/>
     </bean>
+
+    <import resource="spring-shiro.xml"/>
 
     <!-- 开启事务注解驱动 -->
     <!--<tx:annotation-driven transaction-manager="transactionManager"/>-->

@@ -1,6 +1,7 @@
 package com.invitation.service;
 
 import com.google.gson.JsonParser;
+import com.util.GetJson;
 import com.util.api.HttpImpl;
 import com.util.api.InvitationApi;
 import okhttp3.RequestBody;
@@ -17,7 +18,7 @@ import java.io.IOException;
 @Service
 public class InvitationServiceImpl implements InvitationService {
     @Override
-    public Integer invitation(RequestBody requestBody, String ip, String token) {
+    public String invitation(RequestBody requestBody, String ip, String token) {
         InvitationApi api = (InvitationApi) HttpImpl.getHttpImpl(ip, InvitationApi.class, token);
         Call<ResponseBody> allMeta = api.invitation(requestBody);
         String result ="";
@@ -26,7 +27,7 @@ public class InvitationServiceImpl implements InvitationService {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        Integer code = new JsonParser().parse(result).getAsJsonObject().get("code").getAsInt();
-        return code;
+        String json = GetJson.getJson(result);
+        return json;
     }
 }
